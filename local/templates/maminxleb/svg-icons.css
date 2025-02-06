@@ -1,0 +1,90 @@
+/* Стили для значка "add-line" */
+:where(.i-ri\:add-line) {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='M11 11V5h2v6h6v2h-6v6h-2v-6H5v-2z'/%3E%3C/svg%3E");
+}
+
+:where(.i-ri\:subtract-line) {
+  display: inline-block;
+  width: 15px;
+  height: 2px;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  --svg: url(
+    data:image/svg + xml,
+    %3Csvgxmlns="http://www.w3.org/2000/svg"viewBox="0 0 24 24"width="24"height="24"%3E%3Cpathfill="black"d="M5 11v2h14v-2z"/%3E%3C/svg%3E
+  );
+}
+
+/* Стили для значка "arrow-left-s-line" */
+:where(.i-ri\:arrow-left-s-line) {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask-image: var(--svg);
+  mask-image: var(--svg);
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' width='24' height='24'%3E%3Cpath fill='black' d='m10.828 12l4.95 4.95l-1.414 1.415L8 12l6.364-6.364l1.414 1.414z'/%3E%3C/svg%3E");
+}
+
+/* Переменные темы */
+:root {
+  --theme-font-family: "Fira Sans";
+  --theme-color-primary: #e31c26;
+  --theme-color-primary-rgb: 227 28 38;
+  --border-radius-sm: 6px;
+  --border-radius: 12px;
+  --border-radius-md: 18px;
+  --border-radius-lg: 24px;
+  --border-radius-xl: 36px;
+  --border-radius-2xl: 48px;
+  --border-radius-3xl: 72px;
+  --object-fit: cover;
+  --theme-background: #f5f5f5;
+}
+
+/* Размеры хедера и прилипание элементов */
+:root {
+  --desktop-header-height: 5rem;
+  --desktop-horizontal-menu-height: 3.5rem;
+  --mobile-header-height: 3.5rem;
+  --sticky-top-offset: 0;
+}
+
+:root.desktop {
+  --sticky-top-offset: var(--desktop-header-height);
+}
+
+/* Стили для контейнера swiper (переполнение) */
+swiper-container[data-v-9c9e2ac1]::part(container) {
+  overflow: visible;
+}
+
+/* Скрытие кнопок Swiper на мобильных устройствах */
+[data-v-2a8a35d4] swiper-container ~ button {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  [data-v-2a8a35d4] swiper-container ~ button {
+    display: grid;
+  }
+}
