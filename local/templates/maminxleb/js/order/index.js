@@ -1,15 +1,25 @@
 document.addEventListener("DOMContentLoaded", function () {
-  function handleAjaxRequest(componentsClass, action, data = {}) {
-    return BX.ajax.runComponentAction(componentsClass, action, {
+  const orderForm = document.getElementById("orderForm");
+  const submitButton = document.getElementById("orderLogic");
+  const clearBasket = document.getElementById("clearBasket");
+  const emailWrapper = document.getElementById("email-wrapper");
+  const emailInput = document.getElementById("email");
+
+  let isAuthorized = false;
+
+  // Универсальная функция для запросов к компоненту
+  function handleAjaxRequest(component, action, data = {}) {
+    return BX.ajax.runComponentAction(component, action, {
       mode: "class",
       data: data,
     });
   }
 
+  // Проверка авторизации пользователя
   handleAjaxRequest("shelton:order", "isAuthorized").then(function (response) {
-    const emailWrapper = document.getElementById("email-wrapper");
-    const emailInput = document.getElementById("email");
-    if (!response.data) {
+    isAuthorized = !!response.data;
+
+    if (!isAuthorized) {
       emailWrapper.classList.remove("hidden");
       emailInput.setAttribute("required", "required");
     } else {
@@ -18,91 +28,88 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  const clearBasket = document.getElementById("clearBasket");
-  clearBasket.addEventListener("click", function () {
+  // Очистка корзины
+  clearBasket?.addEventListener("click", function () {
     handleAjaxRequest("shelton:order", "clearBasket")
       .then(function (response) {
-        if (response.status === "success") {
-          if (response.data.redirect) {
-            window.location.href = response.data.redirect;
-          }
+        if (response.status === "success" && response.data.redirect) {
+          window.location.href = response.data.redirect;
         } else {
-          console.log("Произошла ошибка при очистке корзины");
+          console.warn("Ошибка при очистке корзины");
         }
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch(console.error);
   });
 
-  var orderForm = document.getElementById("orderForm");
-  var submitButton = document.getElementById("orderLogic");
+  // Обработка отправки формы
+  submitButton?.addEventListener("click", function (event) {
+    event.preventDefault();
 
-  submitButton.addEventListener("click", function (event) {
-    event.preventDefault(); // Отменяем стандартную отправку формы
+    const name = orderForm.querySelector('input[name="name"]');
+    const phone = orderForm.querySelector('input[name="phone"]');
+    const email = orderForm.querySelector('input[name="email"]');
 
-    var name = orderForm.querySelector('input[name="name"]');
-    var phone = orderForm.querySelector('input[name="phone"]');
-    var email = orderForm.querySelector('input[name="email"]');
-    var isAuthorized = orderForm.getAttribute('data-user-auth') === 'Y';
-
-    var errors = [];
-
-    if (!name || !name.value.trim()) {
-      errors.push("Введите ваше имя");
-    }
-    if (!phone || !phone.value.trim()) {
-      errors.push("Введите номер телефона");
-    }
-    if (!isAuthorized && (!email || !email.value.trim())) {
-      errors.push("Введите ваш email");
-    }
+    const errors = validateForm({ name, phone, email, isAuthorized });
 
     if (errors.length > 0) {
       showValidationPopup(errors);
       return;
     }
 
-    var formData = new FormData(orderForm);
-    var orderData = {};
-    formData.forEach(function (value, key) {
-      orderData[key] = value;
-    });
+    const formData = new FormData(orderForm);
+    const orderData = Object.fromEntries(formData.entries());
 
-    console.log(orderData);
+    console.log("Отправляем данные:", orderData);
 
-    BX.ajax.runComponentAction('shelton:order', 'processOrder', {
-      mode: 'class',
-      data: {
-        orderData: orderData
-      }
-    }).then(function (response) {
-      console.log(response);
-    }).catch(function (error) {
-      console.error('Ошибка сети или сервера:', error);
-    });
+    handleAjaxRequest("shelton:order", "processOrder", { orderData })
+      .then(function (response) {
+        console.log("Ответ от сервера:", response);
+        // здесь можно сделать redirect, popup или сообщение об успехе
+      })
+      .catch(function (error) {
+        console.error("Ошибка сети или сервера:", error);
+      });
   });
 
-  // Функция открытия popup-а с ошибками
+  // Валидация формы
+  function validateForm({ name, phone, email, isAuthorized }) {
+    const errors = [];
+
+    if (!name?.value.trim()) {
+      errors.push("Введите ваше имя");
+    }
+
+    if (!phone?.value.trim()) {
+      errors.push("Введите номер телефона");
+    }
+
+    if (!isAuthorized) {
+      if (!email || !email.value.trim()) {
+        errors.push("Введите ваш email — он нужен для входа");
+      }
+    }
+
+    return errors;
+  }
+
+  // Показать popup с ошибками
   function showValidationPopup(errors) {
-    var $list = $('#validation-error-list');
+    const $list = $('#validation-error-list');
     $list.empty();
-    errors.forEach(function (error) {
-      $list.append('<li>' + error + '</li>');
+    errors.forEach(error => {
+      $list.append(`<li>${error}</li>`);
     });
 
     $.magnificPopup.open({
       items: {
         src: '#validation-error-popup',
-        type: 'inline'
-      }
+        type: 'inline',
+      },
     });
   }
 
   // Закрытие popup-а
-  $(document).on('click', '.close-popup', function () {
+  $(document).on("click", ".close-popup", function () {
     $.magnificPopup.close();
   });
 });
-
-

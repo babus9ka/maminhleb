@@ -28,7 +28,8 @@ $APPLICATION->SetTitle("Оформление заказа");
                 Очистить корзину
             </button>
         </div>
-        <form action="" class="flex gap-6" method="POST" id="orderForm">
+        <form action="" class="flex gap-6" method="POST" id="orderForm"
+            data-user-auth="<?= $USER->IsAuthorized() ? 'Y' : 'N' ?>">
 
             <? $APPLICATION->IncludeComponent(
                 "shelton:basket",
