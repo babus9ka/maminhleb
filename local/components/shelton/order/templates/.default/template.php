@@ -104,12 +104,12 @@ $APPLICATION->IncludeFile(
                     <span class="iconify i-ri:arrow-right-s-line icon absolute right-0" aria-hidden="true"></span>
                 </div>
 
-                <div class="popup-datetime relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
+                <!-- <div class="popup-datetime relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
                     type="button" aria-haspopup="dialog" aria-expanded="false" href="#dateTimeModal">
                     <span class="iconify i-ri:chat-history-line icon" aria-hidden="true"></span>
                     <div>Укажите дату</div>
                     <span class="iconify i-ri:arrow-right-s-line icon absolute right-0" aria-hidden="true"></span>
-                </div>
+                </div> -->
 
                 <div class="popup-comment relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
                     type="button" aria-haspopup="dialog" aria-expanded="false" href="#commentModal">
@@ -217,176 +217,14 @@ $APPLICATION->IncludeFile(
     </div>
 </div>
 
-<style>
-    .white-popup {
-        position: relative;
-        background: #fff;
-        padding: 30px;
-        width: 100%;
-        max-width: 400px;
-        margin: 40px auto;
-        text-align: center;
-        border-radius: 10px;
-    }
-
-    .white-popup h2 {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-
-    .white-popup ul {
-        list-style: none;
-        padding: 0;
-        margin-bottom: 20px;
-        text-align: left;
-    }
-
-    .white-popup ul li {
-        padding: 4px 0;
-        color: #d60000;
-    }
-
-    .white-popup .close-popup {
-        background: #333;
-        color: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 6px;
-        cursor: pointer;
-    }
-
-    .white-popup .close-popup:hover {
-        background: #000;
-    }
-</style>
-
 <div id="validation-error-popup" class="mfp-hide white-popup">
     <h2>Не заполнены поля</h2>
     <ul id="validation-error-list"></ul>
     <button class="close-popup">Закрыть</button>
 </div>
 
-<script>
-    $(function () {
-        var $buttons = $(".payment-option");
-        var $changeBlock = $("#change_block");
-        var $changeInput = $("#change_amount");
-        var $paymentType = $("#payment_type");
-
-        function updatePayment($button) {
-            $buttons.removeClass("active");
-            $buttons.find(".indicator").removeClass("bg-primary");
-            $button.addClass("active");
-            $button.find(".indicator").addClass("bg-primary");
-            $paymentType.val($button.val());
-            if ($button.val() === "2") {
-                $changeBlock.show();
-                $changeInput.prop("disabled", false).attr("required", true);
-            } else {
-                $changeBlock.hide();
-                $changeInput.prop("disabled", true).removeAttr("required");
-            }
-        }
-
-        $buttons.on("click", function () {
-            updatePayment($(this));
-        });
-
-        var initialPayment = $paymentType.val();
-        if (initialPayment === "2") {
-            updatePayment($("#payment_cod"));
-        } else {
-            updatePayment($("#payment_card"));
-        }
-    });
-</script>
-
-<script>
-    $(function () {
-        // Логика для комментариев
-        $('#saveCommentBtn').on('click', function () {
-            var commentValue = $('#commentTextArea').val().trim();
-            $('#orderCommentHidden').val(commentValue);
-            $.magnificPopup.close();
-        });
-
-        // Инициализация Magnific Popup для комментариев
-        $('.popup-comment').magnificPopup({
-            type: 'inline',
-            removalDelay: 300,
-            mainClass: 'mfp-fade',
-            closeBtnInside: true
-        });
-        $('#closeCommentModal').on('click', function () {
-            $.magnificPopup.close();
-        });
-    });
-
-    $(function () {
-        // Логика для выбора даты/времени
-        $('#closeDateTimeModal').on('click', function () {
-            $.magnificPopup.close();
-        });
-
-        let selectedDate = null;
-        const saveBtn = $('#saveDateTimeBtn');
-        const container = $('#dateSwiper');
-        const dateHiddenInput = $('#orderDateHidden');
-
-        container.on('click', 'swiper-slide', function () {
-            container.find('swiper-slide').removeClass('active');
-            $(this).addClass('active');
-            selectedDate = $(this).text().trim();
-            saveBtn.prop('disabled', false);
-        });
-
-        let asapActive = false;
-        $('#asapBtn').on('click', function () {
-            asapActive = !asapActive;
-            if (asapActive) {
-                $(this).attr('data-state', 'on').attr('aria-pressed', 'true');
-                selectedDate = 'Как можно скорее';
-                container.find('swiper-slide').removeClass('active');
-                saveBtn.prop('disabled', false);
-            } else {
-                $(this).attr('data-state', 'off').attr('aria-pressed', 'false');
-                selectedDate = null;
-                saveBtn.prop('disabled', true);
-            }
-        });
-
-        saveBtn.on('click', function () {
-            console.log('Выбрана дата:', selectedDate);
-            dateHiddenInput.val(selectedDate);
-            $.magnificPopup.close();
-        });
-
-        // Инициализация Magnific Popup для выбора даты/времени
-        $('.popup-datetime').magnificPopup({
-            type: 'inline',
-            removalDelay: 300,
-            mainClass: 'mfp-fade',
-            closeBtnInside: true
-        });
-    });
-
-</script>
-
-<script>
-    $(function () {
-        $('.order-address-button').magnificPopup({
-            type: 'inline',
-            preloader: false,
-            focus: '#username',
-            modal: true
-        });
-        $(document).on('click', '#closedOrderContainer', function (e) {
-            e.preventDefault();
-            $.magnificPopup.close();
-        });
-    });
-</script>
-
 <?php
+$this->addExternalJS(SITE_TEMPLATE_PATH . "/js/order/payment-selection.js");
+$this->addExternalJS(SITE_TEMPLATE_PATH . "/js/order/comment-datetime-popup.js");
 $this->addExternalJS(SITE_TEMPLATE_PATH . "/js/order/index.js");
 ?>
