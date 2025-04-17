@@ -4,7 +4,7 @@ $APPLICATION->SetTitle('Главная');
 ?>
 
 
-<div class="desktop-container relative flex w-full" bis_skin_checked="1">
+<div class="desktop-container relative flex w-full">
 
 
     <? $APPLICATION->IncludeComponent(
@@ -38,7 +38,7 @@ $APPLICATION->SetTitle('Главная');
 
     <main class="mx-auto flex w-full min-w-0 max-w-[1570px] flex-col px-4 py-6 max-lg:pt-3 lg:px-6">
         <!--[-->
-        <div class="flex min-h-0 grow flex-col gap-y-8" bis_skin_checked="1">
+        <div class="flex min-h-0 grow flex-col gap-y-8">
 
             <? $APPLICATION->IncludeComponent(
                 "shelton:time-work",
@@ -49,7 +49,7 @@ $APPLICATION->SetTitle('Главная');
                 )
             ); ?>
 
-            <div class="relative w-full max-w-full mb-4" data-v-2a8a35d4="" data-v-9c9e2ac1="" bis_skin_checked="1">
+            <div class="relative w-full max-w-full mb-4" data-v-2a8a35d4="" data-v-9c9e2ac1="">
 
                 <!-- СЛАЙДЕР НА ГЛАВНОЙ -->
                 <? $APPLICATION->IncludeComponent(
@@ -152,34 +152,7 @@ $APPLICATION->SetTitle('Главная');
     <aside
         class="sticky top-[--sticky-top-offset] h-fit max-h-[calc(100vh-var(--sticky-top-offset))] min-h-0 shrink-0 overflow-y-auto overflow-x-hidden px-2 py-6 scrollbar-thin max-lg:pt-3 w-80 lg:w-[400px] lg:px-6"
         style="scrollbar-gutter: stable">
-        <!---->
-        <div class="space-y-3" bis_skin_checked="1">
-
-            <!-- <section class="space-y-1.5">
-                <div role="radiogroup" aria-required="false" dir="ltr" tabindex="0" style="outline: none"
-                    class="flex h-11 w-full rounded-md border bg-white dark:border-gray-800 dark:bg-gray-900"
-                    bis_skin_checked="1">
-                    <button
-                        class="h-full grow basis-0 truncate rounded-md bg-transparent px-2 leading-none text-gray-400 outline-1 outline-primary transition data-[state=checked]:border-transparent data-[state=checked]:bg-primary data-[state=checked]:text-white data-[state=checked]:outline dark:text-gray-300"
-                        tabindex="-1" data-active="false" data-reka-collection-item="" role="radio" type="button"
-                        aria-checked="false" data-state="unchecked" value="delivery" data-v-wave-boundary="true">
-                        <span>Доставка</span>
-                    </button>
-
-                    <button
-                        class="h-full grow basis-0 truncate rounded-md bg-transparent px-2 leading-none text-gray-400 outline-1 outline-primary transition data-[state=checked]:border-transparent data-[state=checked]:bg-primary data-[state=checked]:text-white data-[state=checked]:outline dark:text-gray-300"
-                        tabindex="-1" data-active="true" data-reka-collection-item="" role="radio" type="button"
-                        aria-checked="true" data-state="checked" value="pickup" data-v-wave-boundary="true">
-                        <span>Самовывоз</span>
-                    </button>
-                </div>
-                <button
-                    class="flex h-11 w-full items-center gap-3 rounded-md border bg-white px-2 dark:border-gray-800 dark:bg-gray-900">
-                    <span class="iconify i-ri:map-pin-range-fill icon text-primary" aria-hidden="true" style=""></span>
-                    <span class="truncate">Выбрать точку самовывоза</span>
-                    <span class="iconify i-ri:arrow-right-s-line icon ml-auto" aria-hidden="true" style=""></span>
-                </button>
-            </section> -->
+        <div class="space-y-3">
 
             <? $APPLICATION->IncludeComponent(
                 "shelton:basket",
@@ -192,12 +165,26 @@ $APPLICATION->SetTitle('Главная');
     </aside>
 </div>
 
-<? $APPLICATION->IncludeComponent(
+<?
+$APPLICATION->IncludeComponent(
     "shelton:address",
     "",
     array()
 );
 ?>
+
+<form style="opacity: 0" id="thirdForm" action="/checkout/" method="POST">
+    <input type="hidden" name="delivery_option" id="thirdDeliveryOption" value="">
+    <input type="hidden" name="address" id="thirdAddress" value="">
+    <input type="hidden" name="entrance" id="thirdEntrance" value="">
+    <input type="hidden" name="intercom" id="thirdIntercom" value="">
+    <input type="hidden" name="floor" id="thirdFloor" value="">
+    <input type="hidden" name="apartment" id="thirdApartment" value="">
+    <!-- Новое скрытое поле для выбранного адреса склада -->
+    <input type="hidden" name="address-comment" id="thirdAddressComment" value="">
+    <input type="hidden" id="thirdSelectedAddress" name="selected_address" value="">
+    <button type="submit">Отправить данные</button>
+</form>
 
 <?
 require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/footer.php');

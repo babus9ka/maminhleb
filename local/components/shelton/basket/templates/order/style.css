@@ -1,0 +1,32 @@
+/* Начальное состояние перед открытием */
+.mfp-move-from-top {
+  opacity: 0;
+  transform: translateY(-50px);
+  transition: all 0.2s ease-in-out;
+}
+
+/* Состояние при открытии */
+.mfp-ready.mfp-move-from-top {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Анимация при закрытии */
+.mfp-removing.mfp-move-from-top {
+  opacity: 0;
+  transform: translateY(-50px);
+}
+
+.decrease-quantity {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px; /* Увеличиваем область клика */
+  border-radius: 50%; /* Округляем углы для круглой кнопки */
+  background-color: transparent; /* Фон кнопки, чтобы был видим */
+  cursor: pointer; /* Показываем курсор как указатель */
+}
+
+.decrease-quantity .icon {
+  font-size: 24px; /* Размер иконки */
+}

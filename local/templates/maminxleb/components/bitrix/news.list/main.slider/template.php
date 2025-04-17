@@ -4,24 +4,22 @@
 
     <div class="swiper-wrapper">
         <?
-        
-        foreach($arResult['ITEMS'] as $slide){
+
+        foreach ($arResult['ITEMS'] as $slide) {
             ?>
-            <swiper-slide lazy="true"
-            class="swiper-slide grid h-auto max-w-full shrink-0 place-items-center w-auto"
-            data-v-2a8a35d4="" style="margin-right: 12px">
-            <template shadowrootmode="open">
-                <slot></slot>
-            </template>
-            <!--[--><img loading="lazy" img
-                src="<?= $slide['DETAIL_PICTURE']['SRC'] ?>" alt="<?= $slide['NAME'] ?>"
-                class="rounded-lg object-fit-custom max-h-[425px]" data-v-2a8a35d4="" /><!--]-->
-        </swiper-slide>
+            <swiper-slide lazy="true" class="swiper-slide grid h-auto max-w-full shrink-0 place-items-center w-auto"
+                data-v-2a8a35d4="" style="margin-right: 12px">
+                <template shadowrootmode="open">
+                    <slot></slot>
+                </template>
+                <img loading="lazy" img src="<?= $slide['DETAIL_PICTURE']['SRC'] ?>" alt="<?= $slide['NAME'] ?>"
+                    class="rounded-lg object-fit-custom max-h-[425px]" data-v-2a8a35d4="" />
+            </swiper-slide>
             <?
         }
         ?>
-        
-        
+
+
     </div>
 
 

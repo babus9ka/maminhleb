@@ -1,12 +1,12 @@
 <?php if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
     die(); ?>
 
-<div class="space-y-8" bis_skin_checked="1">
+<div class="space-y-8" >
 
     <?php foreach ($arResult['SECTIONS'] as $section): ?>
 
         <section class="space-y-4">
-            <div id="<?= $section['CODE'] ?>" class="flex items-end justify-between gap-4" bis_skin_checked="1">
+            <div id="<?= $section['CODE'] ?>" class="flex items-end justify-between gap-4" >
                 <a href="#">
                     <h2 class="text-2xl !leading-none md:text-3xl dark:text-white">
                         <?= ($section['NAME']) ?>
@@ -34,7 +34,7 @@
                                         </div>
                                     </div>
                                     <div class="flex min-h-0 grow flex-col gap-1 p-2 lg:gap-2.5 lg:p-3">
-                                        <div class="line-clamp-3 break-words pb-0.5 !leading-none lg:text-lg">
+                                        <div class="line-clamp-3 break-words h-16 pb-0.5 !leading-none lg:text-lg">
                                             <?= $product["NAME"] ?>
                                         </div>
                                         <div class="text-sm text-gray-400 dark:text-gray-400">
@@ -66,4 +66,3 @@
     <? endforeach ?>
 
 </div>
-

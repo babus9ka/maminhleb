@@ -5,12 +5,7 @@ if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
 }
 
 use Bitrix\Main\Engine\Contract\Controllerable;
-use Bitrix\Main\Loader;
-use Bitrix\Main\Context;
-use Bitrix\Sale\Basket;
-use Bitrix\Main\UserTable;
-use Bitrix\Sale;
-use Bitrix\Main\Web\HttpClient;
+use Bitrix\Catalog\StoreTable;
 
 class AddressComponent extends CBitrixComponent implements Controllerable
 {
@@ -23,18 +18,33 @@ class AddressComponent extends CBitrixComponent implements Controllerable
             'processAddress' => [
                 'prefilters' => [],
             ],
+            'getWarehouses' => [
+                'prefilters' => [],
+            ],
         ];
     }
 
-    public function checkBasketAction()
+    public function getWarehousesAction()
     {
-        $basket = Basket::loadItemsForFUser(
-            \Bitrix\Sale\Fuser::getId(),
-            Context::getCurrent()->getSite()
-        );
+        $warehouses = [];
 
-        return $basket->isEmpty() ? "Корзина пуста" : "Корзина содержит товары";
+        $result = StoreTable::getList([
+            'filter' => ['=ACTIVE' => 'Y'],
+            'select' => ['ID', 'ADDRESS', 'GPS_N', 'GPS_S']
+        ]);
+
+        while ($arstore = $result->fetch()) {
+            $warehouses[] = [
+                'id' => $arstore['ID'],
+                'label' => $arstore['ADDRESS'],
+                'coords' => [(float) $arstore['GPS_N'], (float) $arstore['GPS_S']]
+            ];
+        }
+
+        return $warehouses;
+
     }
+
 
     public function executeComponent()
     {

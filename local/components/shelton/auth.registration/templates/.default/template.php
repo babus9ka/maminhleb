@@ -13,27 +13,27 @@
 <div id="authModal" aria-describedby="reka-dialog-description-v-1" aria-labelledby="reka-dialog-title-v-0"
     data-state="open" tabindex="-1"
     class="relative m-auto flex w-full min-w-0 flex-col gap-4 overflow-hidden rounded-lg bg-white shadow-md data-[state=closed]:animate-fadeOut data-[state=open]:animate-contentShow focus:outline-none dark:bg-black p-5 max-w-lg mfp-hide white-popup-block"
-    style="pointer-events: auto; " bis_skin_checked="1">
+    style="pointer-events: auto; " >
     <h2 id="reka-dialog-title-v-0" class="pr-6 text-lg font-bold leading-none hidden"></h2>
-    <div id="reka-dialog-description-v-1" class="space-y-4" bis_skin_checked="1">
-        <div class="mx-auto flex min-h-0 max-w-lg grow flex-col gap-6 p-6 text-center" bis_skin_checked="1">
-            <div class="flex min-h-0 grow flex-col items-center justify-center gap-12" bis_skin_checked="1"><img src=""
+    <div id="reka-dialog-description-v-1" class="space-y-4" >
+        <div class="mx-auto flex min-h-0 max-w-lg grow flex-col gap-6 p-6 text-center" >
+            <div class="flex min-h-0 grow flex-col items-center justify-center gap-12" ><img src=""
                     alt="" class="mx-auto max-h-20 rounded-sm">
-                <div class="w-full space-y-4" bis_skin_checked="1">
+                <div class="w-full space-y-4" >
                     <div class="flex items-center justify-center gap-6 text-xl leading-none text-gray-400 dark:text-gray-500"
-                        bis_skin_checked="1">
+                        >
                         <button id="authButton" class="font-bold text-gray-800 dark:text-gray-200">Вход</button>
                         <button id="registerButton" class=""> Регистрация </button>
                     </div>
                     <form id="authForm" class="" class="w-full space-y-4">
                         <div id="authError" style="color:red;"></div>
                         <input type="hidden" name="action" value="auth">
-                        <div class="relative w-full" bis_skin_checked="1" style="margin-bottom: 10px;"><input
+                        <div class="relative w-full"  style="margin-bottom: 10px;"><input
                                 class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
                                 placeholder=" " autocomplete="off" type="text" name="phone" required=""><span
                                 class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Номер
                                 телефона</span></div>
-                        <div class="relative w-full" bis_skin_checked="1" style="margin-bottom: 10px;"><input
+                        <div class="relative w-full"  style="margin-bottom: 10px;"><input
                                 class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
                                 placeholder=" " autocomplete="off" type="password" name="password" required=""><span
                                 class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Пароль</span>
@@ -41,7 +41,7 @@
                         </button><button type="submit"
                             class="flex w-full border-transparent bg-primary text-white focus-visible:ring-primary/30 disabled:cursor-not-allowed items-center justify-center rounded-md border px-4 py-3 text-center leading-none transition focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 h-12"
                             data-v-wave-boundary="true">
-                            <div class="w-full" bis_skin_checked="1"> Войти </div><span
+                            <div class="w-full" > Войти </div><span
                                 class="iconify i-ri:loader-4-line  icon absolute animate-spin" aria-hidden="true"
                                 style="display: none;"></span>
                         </button>
@@ -49,7 +49,7 @@
                     <form id="registerForm" class="" class="w-full space-y-4">
                         <div id="registerError" style="color:red;"></div>
                         <input type="hidden" name="action" value="register">
-                        <div class="relative w-full" bis_skin_checked="1" style="margin-bottom: 10px;">
+                        <div class="relative w-full"  style="margin-bottom: 10px;">
                             <input
                                 class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
                                 placeholder=" " autocomplete="off" type="text" name="phone" required="">
@@ -57,28 +57,28 @@
                                 class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Номер
                                 телефона</span>
                         </div>
-                        <div class="relative w-full" bis_skin_checked="1" style="margin-bottom: 10px;">
+                        <div class="relative w-full"  style="margin-bottom: 10px;">
                             <input
                                 class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
                                 placeholder=" " autocomplete="off" type="text" name="name" required="">
                             <span
                                 class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Имя</span>
                         </div>
-                        <div class="relative w-full" bis_skin_checked="1" style="margin-bottom: 10px;">
+                        <div class="relative w-full"  style="margin-bottom: 10px;">
                             <input
                                 class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
                                 placeholder=" " autocomplete="off" type="text" name="email" required="">
                             <span
                                 class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Почта</span>
                         </div>
-                        <div class="relative w-full" bis_skin_checked="1" style="margin-bottom: 10px;">
+                        <div class="relative w-full"  style="margin-bottom: 10px;">
                             <input
                                 class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
                                 placeholder=" " autocomplete="off" type="password" name="password" required="">
                             <span
                                 class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Пароль</span>
                         </div>
-                        <div class="relative w-full" bis_skin_checked="1" style="margin-bottom: 10px;">
+                        <div class="relative w-full"  style="margin-bottom: 10px;">
                             <input
                                 class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
                                 placeholder=" " autocomplete="off" type="password" name="password_confirm" required="">
@@ -90,7 +90,7 @@
                         <button type="submit"
                             class="flex w-full border-transparent bg-primary text-white focus-visible:ring-primary/30 disabled:cursor-not-allowed items-center justify-center rounded-md border px-4 py-3 text-center leading-none transition focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 h-12"
                             data-v-wave-boundary="true">
-                            <div class="w-full" bis_skin_checked="1"> Зарегистироваться </div><span
+                            <div class="w-full" > Зарегистироваться </div><span
                                 class="iconify i-ri:loader-4-line  icon absolute animate-spin" aria-hidden="true"
                                 style="display: none;"></span>
                         </button>

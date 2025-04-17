@@ -17,18 +17,19 @@ use Bitrix\Main\Entity\Result;
 
 class BasketComponent extends CBitrixComponent implements Controllerable
 {
-    /**
-     * Подключаем методы, которые будут доступны как действия контроллера (ajax, REST, и т.д.)
-     *
-     * @return array
-     */
     public function configureActions(): array
     {
         return [
+            'getBasket' => [
+                'prefilters' => [],
+            ],
             'addToBasket' => [
                 'prefilters' => [],
             ],
-            'getBasket' => [
+            'checkBasket' => [
+                'prefilters' => [],
+            ],
+            'getBasketTotalSum' => [
                 'prefilters' => [],
             ],
             'addToBasketQuantity' => [
@@ -40,23 +41,30 @@ class BasketComponent extends CBitrixComponent implements Controllerable
         ];
     }
 
-    /**
-     * Возвращает содержимое корзины текущего FUSER (анонимного или авторизованного)
-     */
+    public function checkBasketAction()
+    {
+        $basket = Basket::loadItemsForFUser(
+            Fuser::getId(),
+            Context::getCurrent()->getSite()
+        );
+
+        return ['hasItems' => !$basket->isEmpty()];
+    }
+
     public function getBasketAction()
     {
         $this->includeModules(['sale']);
 
         $basket = $this->loadUserBasket(Fuser::getId());
-        if ($basket->isEmpty()) {
-            return null;
-        }
-
         $items = [];
         $totalBasketSum = 0;
+
         foreach ($basket->getBasketItems() as $item) {
             $productId = $item->getProductId();
-            $imagePath = $this->getProductImage($productId);
+
+            $productData = $this->getProductImageAndGramm($productId);
+            $imagePath = $productData['image'];
+            $gramm = $productData['gramm'];
             $itemTotal = $item->getPrice() * $item->getQuantity();
 
             $items[] = [
@@ -65,6 +73,8 @@ class BasketComponent extends CBitrixComponent implements Controllerable
                 'QUANTITY' => $item->getQuantity(),
                 'PRICE' => $item->getPrice(),
                 'IMAGE' => $imagePath,
+                'GRAMM' => $gramm,
+                'PRODUCT_PRICE' => $itemTotal,
             ];
 
             $totalBasketSum += $itemTotal;
@@ -72,26 +82,13 @@ class BasketComponent extends CBitrixComponent implements Controllerable
 
         return [
             'ITEMS' => $items,
-            'TOTAL_SUM' => $totalBasketSum,
+            'TOTAL_SUM' => $totalBasketSum, // Общая сумма всей корзины
         ];
     }
 
-    /**
-     * Добавляет товар в корзину
-     *
-     * @param int    $productId
-     * @param float  $quantity
-     * @param float  $price
-     * @param string $name
-     *
-     * @return array
-     * @throws SystemException
-     */
-    public function addToBasketAction(int $productId, float $quantity, float $price, string $name): array
+    public function addToBasketAction(int $productId, float $quantity, float $price, string $name)
     {
         $this->includeModules(['sale', 'catalog']);
-
-        $imagePath = $this->getProductImage($productId);
 
         $basket = $this->loadUserBasket(Fuser::getId());
         $existingItem = $basket->getExistsItem('catalog', $productId);
@@ -110,45 +107,50 @@ class BasketComponent extends CBitrixComponent implements Controllerable
                 'PRICE' => $price,
                 'NAME' => $name,
             ]);
-            $existingItem = $newItem; // чтобы ниже работать с $existingItem
         }
 
-        $basket->save();
+        $result = $basket->save();
 
-        return [
-            'data' => [
-                'PRODUCTID' => $existingItem->getProductId(),
-                'NAME' => $existingItem->getField('NAME'),
-                'QUANTITY' => $existingItem->getQuantity(),
-                'PRICE' => $existingItem->getPrice(),
-                'IMAGE' => $imagePath,
-            ],
-        ];
+        if (!$result->isSuccess()) {
+            return [
+                'success' => false,
+                'error' => implode(', ', $result->getErrorMessages()),
+            ];
+        }
+
+        return ['success' => true];
     }
-
-    /**
-     * Устанавливает количество (QUANTITY) для товара в корзине
-     *
-     * @param int   $productId
-     * @param float $quantity
-     *
-     * @return array
-     * @throws SystemException
-     */
-    public function addToBasketQuantityAction(int $productId, float $quantity)
+    public function getBasketTotalSumAction()
     {
         $this->includeModules(['sale']);
 
         $basket = $this->loadUserBasket(Fuser::getId());
+        $totalBasketSum = 0;
+
+        foreach ($basket->getBasketItems() as $item) {
+            $totalBasketSum += $item->getPrice() * $item->getQuantity();
+        }
+
+        return [
+            'TOTAL_SUM' => $totalBasketSum,
+        ];
+    }
+    public function addToBasketQuantityAction(int $productId, float $quantity, $price)
+    {
+        $this->includeModules(['sale']);
+        $basket = $this->loadUserBasket(Fuser::getId());
         $item = $basket->getExistsItem('catalog', $productId);
 
         if ($item) {
-            $item->setField('QUANTITY', $quantity);
+            $newQuantity = $item->getQuantity() + 1;
+            $item->setField('QUANTITY', $newQuantity);
             $basket->save();
+            $productPrice = $price * $newQuantity;
             return [
                 'PRODUCTID' => $productId,
-                'QUANTITY' => $quantity,
-                'PRICE' => $item->getPrice(),
+                'QUANTITY' => $newQuantity,
+                'PRICE' => $price,
+                'PRODUCT_PRICE' => $productPrice,
             ];
         }
 
@@ -160,46 +162,41 @@ class BasketComponent extends CBitrixComponent implements Controllerable
         ];
     }
 
-    public function removeFromBasketQuantityAction(int $productId, float $quantity)
+    public function removeFromBasketQuantityAction(int $productId, float $quantity, $price)
     {
         $this->includeModules(['sale']);
-
 
         $basket = $this->loadUserBasket(Fuser::getId());
         $item = $basket->getExistsItem('catalog', $productId);
 
         if ($item) {
-            if ($quantity < 1) {
-                $item->delete();
+            $newQuantity = $item->getQuantity() - 1;
+
+            if ($newQuantity <= 0) {
+                $item->delete(); // Если товара 0 или меньше — удаляем
             } else {
-                $item->setField('QUANTITY', $quantity);
+                $item->setField('QUANTITY', $newQuantity);
             }
 
             $basket->save();
 
             return [
+                'success' => true,
                 'PRODUCTID' => $productId,
-                'QUANTITY' => $quantity > 0 ? $quantity : 0,
-                'PRICE' => $quantity > 0 ? $item->getPrice() : 0,
+                'QUANTITY' => max($newQuantity, 0), // Возвращаем 0, если товар удалён
+                'PRICE' => $price,
+                'PRODUCT_PRICE' => max($price * $newQuantity, 0),
             ];
         }
 
-
         return [
+            'success' => false, // Если товара не было в корзине
             'PRODUCTID' => $productId,
             'QUANTITY' => 0,
             'PRICE' => 0,
         ];
     }
 
-
-    /**
-     * Метод вызывается при авторизации пользователя (пример: перенос корзины анонимного пользователя в корзину авторизованного)
-     *
-     * @param int $userId
-     *
-     * @return void
-     */
     public function onBeforeUserLogin(int $userId): void
     {
         $guestBasket = $this->loadUserBasket(Fuser::getId());
@@ -231,30 +228,18 @@ class BasketComponent extends CBitrixComponent implements Controllerable
         $guestBasket->save();
     }
 
-    /**
-     * Метод вызывается при выходе пользователя
-     */
     public function onBeforeUserLogout(): void
     {
         // Просто сохраняем текущую корзину, если нужно
         $basket = $this->loadUserBasket(Fuser::getId());
         $basket->save();
-    }
+    } 
 
-    /**
-     * Основной метод компонента
-     */
     public function executeComponent()
     {
         $this->includeComponentTemplate();
     }
 
-    /**
-     * Вспомогательный метод для подключения модулей
-     *
-     * @param array $modules
-     * @throws SystemException
-     */
     private function includeModules(array $modules): void
     {
         foreach ($modules as $module) {
@@ -264,35 +249,32 @@ class BasketComponent extends CBitrixComponent implements Controllerable
         }
     }
 
-    /**
-     * Возвращает объект корзины для указанного FUSER
-     *
-     * @param int $fuserId
-     * @return Basket
-     */
     private function loadUserBasket(int $fuserId): Basket
     {
         return Basket::loadItemsForFUser($fuserId, Context::getCurrent()->getSite());
     }
 
-    /**
-     * Получает путь к изображению товара
-     *
-     * @param int $productId
-     * @return string
-     */
-    private function getProductImage(int $productId): string
+    private function getProductImageAndGramm(int $productId): array
     {
-        $res = ElementTable::getList([
-            'select' => ['DETAIL_PICTURE'],
-            'filter' => ['=ID' => $productId],
-            'limit' => 1,
-        ]);
+        $res = CIBlockElement::GetList(
+            [],
+            ['=ID' => $productId],
+            false,
+            ['nTopCount' => 1],
+            ['DETAIL_PICTURE', 'PROPERTY_GRAMM']
+        );
 
-        if ($product = $res->fetch()) {
-            return CFile::GetPath($product['DETAIL_PICTURE']);
+        if ($product = $res->Fetch()) {
+            return [
+                'image' => $product['DETAIL_PICTURE'] ? CFile::GetPath($product['DETAIL_PICTURE']) : '', // Проверка на наличие изображения
+                'gramm' => isset($product['PROPERTY_GRAMM_VALUE']) ? $product['PROPERTY_GRAMM_VALUE'] : null // Проверка на граммы
+            ];
         }
 
-        return '';
+        return [
+            'image' => '',
+            'gramm' => null
+        ];
     }
+
 }

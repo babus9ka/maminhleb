@@ -3,29 +3,29 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 	die();
 ?>
 <footer class="mt-auto">
-	<div class="border-t bg-white py-8 dark:border-gray-800 dark:bg-black" bis_skin_checked="1">
-		<div class="desktop-container space-y-6 px-4" bis_skin_checked="1">
-			<div class="flex items-center justify-center gap-8" bis_skin_checked="1">
+	<div class="border-t bg-white py-8 dark:border-gray-800 dark:bg-black" >
+		<div class="desktop-container space-y-6 px-4" >
+			<div class="flex items-center justify-center gap-8" >
 				<a aria-current="page" href="<?= SITE_DIR ?>"
 					class="router-link-active router-link-exact-active shrink-0"><img img
 						src="<?= SITE_TEMPLATE_PATH ?>/assets/1644306968czentr.png" alt="Мамин хлеб | Брест"
 						class="max-h-14 rounded-sm" /></a>
 
-				<div class="flex flex-wrap gap-2.5" bis_skin_checked="1">
+				<div class="flex flex-wrap gap-2.5" >
 					<a href="https://vk.com/maminhleb" rel="noopener noreferrer" target="_blank"
 						class="transition hover:scale-105">
 						<img style="width: 40px;" src="<?= SITE_TEMPLATE_PATH ?>/assets/instagram.png"
 							alt="instagram" />
 					</a>
 				</div>
-				<div class="flex flex-col gap-1" bis_skin_checked="1">
+				<div class="flex flex-col gap-1" >
 					<a href="" rel="noopener noreferrer" target="_blank"
 						class="text-sm text-gray-500 underline underline-offset-2 transition hover:text-primary dark:text-gray-500">Политика
 						конфиденциальности</a>
 				</div>
 			</div>
-			<div class="text-center" bis_skin_checked="1">
-				<div class="text-xs text-gray-400 dark:text-gray-400" bis_skin_checked="1">
+			<div class="text-center" >
+				<div class="text-xs text-gray-400 dark:text-gray-400" >
 
 					<p>Мамин хлеб © 2025</p>
 				</div>
@@ -37,7 +37,7 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 </div>
 </div>
 </div>
-<div id="teleports" bis_skin_checked="1"></div>
+<div id="teleports" ></div>
 
 
 
@@ -75,6 +75,20 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 </script>
 
 <script>
+	var swiper = new Swiper(".swiper-container-date-order", {
+		slidesPerView: 3,
+		centeredSlides: true,
+		spaceBetween: 5,
+		grabCursor: true,
+		initialSlide: 1,
+		pagination: {
+			el: ".swiper-pagination",
+			clickable: true,
+		},
+	});
+</script>
+
+<script>
 	document.querySelectorAll('.section_catalog_from_scroll').forEach(anchor => {
 		anchor.addEventListener('click', function (e) {
 			e.preventDefault(); // Предотвращаем стандартное поведение ссылки
@@ -97,6 +111,22 @@ if (!defined('B_PROLOG_INCLUDED') || B_PROLOG_INCLUDED !== true)
 
 </script>
 
+<script>
+	document.addEventListener("DOMContentLoaded", function () {
+		const doorphoneInput = document.getElementById("doorphone");
+
+		function removeRequired(mutationsList) {
+			for (const mutation of mutationsList) {
+				if (mutation.type === "attributes" && mutation.attributeName === "required") {
+					doorphoneInput.removeAttribute("required");
+				}
+			}
+		}
+		const observer = new MutationObserver(removeRequired);
+		observer.observe(doorphoneInput, { attributes: true });
+		doorphoneInput.removeAttribute("required");
+	});
+</script>
 
 </body>
 
