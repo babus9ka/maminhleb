@@ -21,18 +21,43 @@ $(function () {
       preloader: false,
       focus: "#username",
       modal: true,
-      removalDelay: 500, // delay removal by X to allow out-animation
+      removalDelay: 500,
       callbacks: {
         beforeOpen: function () {
           this.st.mainClass = this.st.el.attr("data-effect");
         },
       },
-      midClick: true, // allow opening popup on middle mouse click. Always set it to true if you don't provide alternative source.
+      midClick: true,
     });
 
     $(document).on("click", ".fff", function (e) {
       e.preventDefault();
       $.magnificPopup.close();
     });
+  });
+});
+
+
+$(document).ready(function () {
+  $('#orderButton').on('click', function (e) {
+    e.preventDefault();
+    $.magnificPopup.open({
+      items: {
+        src: '#address',
+        type: 'inline'
+      },
+      modal: true,     
+
+      midClick: true,
+      callbacks: {
+        beforeOpen: function () {
+        }
+      }
+    });
+  });
+
+  $(document).on('click', '#closedOrderContainer', function (e) {
+    e.preventDefault();
+    $.magnificPopup.close();
   });
 });

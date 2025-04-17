@@ -11,6 +11,7 @@ use Bitrix\Sale\Basket;
 use Bitrix\Main\UserTable;
 use Bitrix\Sale;
 use Bitrix\Main\Web\HttpClient;
+use Bitrix\Sale\Delivery\Services\Manager;
 
 class AddressComponent extends CBitrixComponent implements Controllerable
 {
@@ -26,15 +27,6 @@ class AddressComponent extends CBitrixComponent implements Controllerable
         ];
     }
 
-    public function checkBasketAction()
-    {
-        $basket = Basket::loadItemsForFUser(
-            \Bitrix\Sale\Fuser::getId(),
-            Context::getCurrent()->getSite()
-        );
-
-        return $basket->isEmpty() ? "Корзина пуста" : "Корзина содержит товары";
-    }
 
     public function executeComponent()
     {

@@ -1,306 +1,392 @@
-<?
-if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true)
-    die();
-?>
-
 <?php
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    var_dump($_POST);
-} else {
-    echo "Ошибка: Данные не отправлены.";
+if (!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED !== true) {
+    die();
 }
-die();
 ?>
 
 
-<main class="desktop-container flex min-h-0 w-full min-w-0 grow flex-col p-6">
-    <div class="mb-4 ml-4 2xl:absolute" bis_skin_checked="1">
-        <button
-            class="inline-flex h-11 w-fit items-center gap-1.5 rounded-lg bg-gray-200 px-4 text-gray-600 transition hover:bg-gray-300 dark:bg-gray-800 dark:text-gray-400 hover:dark:bg-gray-700">
-            <span class="iconify i-ri:arrow-left-line icon" aria-hidden="true"></span>
-            Назад
-        </button>
-    </div>
-    <div class="mx-auto w-full max-w-[1146px] space-y-6" bis_skin_checked="1">
-        <div class="flex items-center justify-between gap-3" bis_skin_checked="1">
-            <h1 class="text-2xl !leading-none md:text-3xl dark:text-white">
-                Оформление заказа
-            </h1>
-            <button
-                class="flex items-center gap-1.5 text-base leading-tight text-red-500 underline-offset-4 hover:underline"
-                aria-haspopup="dialog" aria-expanded="false" data-state="closed">
-                <span class="iconify i-ri:delete-bin-2-fill icon text-xl" aria-hidden="true"></span>
-                Очистить корзину
-            </button>
-        </div>
-        <form class="flex gap-6">
-            <div class="min-w-0 max-w-[686px] grow space-y-6 lg:shrink-0" bis_skin_checked="1">
-                <div class="space-y-6 rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-900 rounded-lg bg-white p-6 dark:bg-gray-900"
-                    bis_skin_checked="1">
-                    <h2 class="font-bold !leading-none lg:text-xl">Корзина</h2>
-                    <div class="divide-y dark:divide-gray-800" bis_skin_checked="1" style="position: relative">
-                        <div class="flex items-start gap-4 py-4" bis_skin_checked="1">
-                            <div class="aspect-[4/3] w-28 shrink-0" bis_skin_checked="1">
-                                <img loading="lazy" src="./Мамин хлеб_files/adi82361711376246.jpg" alt="Пицца колбасная"
-                                    class="object-fit-custom h-full w-full rounded-md" />
-                            </div>
-                            <div class="space-y-2" bis_skin_checked="1">
-                                <div class="space-y-1" bis_skin_checked="1">
-                                    <div class="leading-none" bis_skin_checked="1">
-                                        Пицца колбасная
-                                    </div>
-                                    <div class="flex flex-wrap items-center gap-1 text-sm leading-none text-gray-400 dark:text-gray-400"
-                                        bis_skin_checked="1">
-                                        <!----><!---->
-                                    </div>
-                                </div>
-                                <div class="flex items-center gap-2" bis_skin_checked="1">
-                                    <button type="button" class="inline-flex">
-                                        <span class="iconify i-ri:subtract-line icon" aria-hidden="true"></span>
-                                    </button>
-                                    <div class="relative grid min-w-10 place-items-center text-center text-xl"
-                                        bis_skin_checked="1">
-                                        <span class="iconify i-ri:loader-4-line icon absolute h-5 w-5 animate-spin"
-                                            aria-hidden="true" style="display: none"></span><span class="">5</span>
-                                    </div>
-                                    <button type="button" class="inline-flex">
-                                        <span class="iconify i-ri:add-line icon" aria-hidden="true"></span>
-                                    </button>
-                                </div>
-                                <div class="flex items-center gap-2" bis_skin_checked="1">
-                                    <!----><span class="text-lg leading-none">3&nbsp;450 ₽</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!---->
-                </div>
-                <!----><!---->
-            </div>
-            <div class="min-w-0 max-w-[425px] grow space-y-6 lg:shrink-0" bis_skin_checked="1">
-                <div class="space-y-6 rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
-                    bis_skin_checked="1">
-                    <section class="space-y-3">
-                        <h2 class="font-bold !leading-none lg:text-xl">
-                            Контактные данные
-                        </h2>
-                        <div class="flex flex-col gap-3" bis_skin_checked="1">
-                            <div class="relative w-full" bis_skin_checked="1">
-                                <input
-                                    class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500 scroll-mt-[calc(var(--sticky-top-offset)+2.5rem)]"
-                                    placeholder=" " autocomplete="off" type="text" required="" /><span
-                                    class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Имя</span>
-                            </div>
-                            <div class="relative w-full" bis_skin_checked="1">
-                                <input
-                                    class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500 scroll-mt-[calc(var(--sticky-top-offset)+2.5rem)]"
-                                    placeholder=" " autocomplete="off" type="text" inputmode="numeric"
-                                    required="" /><span
-                                    class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">Номер
-                                    телефона</span>
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="space-y-6 rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-900"
-                    bis_skin_checked="1">
-                    <section class="space-y-2 rounded-lg bg-gray-100 px-4 py-1 dark:bg-gray-800 !bg-transparent !p-0">
-                        <h2 class="font-bold !leading-none lg:text-xl pt-3">
-                            Тип заказа: Доставка <span> ~60 мин </span>
-                        </h2>
-                        <div class="divide-y divide-gray-300 dark:divide-gray-700" bis_skin_checked="1">
-                            <div class="relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
-                                bis_skin_checked="1">
-                                <span class="iconify i-ri:map-pin-line icon" aria-hidden="true"></span>
-                                <div class="space-y-1" bis_skin_checked="1">
-                                    <div bis_skin_checked="1">
-                                        улица Софьи Ковалевской, 4А
-                                    </div>
-                                    <div class="text-sm leading-none text-gray-500" bis_skin_checked="1">
-                                        подъезд 5, домофон 456, этаж 3, квартира 7
-                                    </div>
-                                    <!----><!---->
-                                </div>
-                                <span class="iconify i-ri:arrow-right-s-line icon absolute right-0"
-                                    aria-hidden="true"></span>
-                            </div>
-                            <div class="relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
-                                type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed"
-                                bis_skin_checked="1">
-                                <span class="iconify i-ri:chat-history-line icon" aria-hidden="true"></span>
-                                <div bis_skin_checked="1">Укажите дату и время</div>
-                                <span class="iconify i-ri:arrow-right-s-line icon absolute right-0"
-                                    aria-hidden="true"></span>
-                            </div>
-                            <div class="relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
-                                type="button" aria-haspopup="dialog" aria-expanded="false" data-state="closed"
-                                bis_skin_checked="1">
-                                <span class="iconify i-ri:message-3-line icon" aria-hidden="true"></span>
-                                <div class="truncate" bis_skin_checked="1">
-                                    Комментарий к заказу
-                                </div>
-                                <span class="iconify i-ri:arrow-right-s-line icon absolute right-0"
-                                    aria-hidden="true"></span>
-                            </div>
-                            <div class="relative flex items-center gap-2.5 py-2.5 leading-none justify-between"
-                                bis_skin_checked="1">
-                                <label for="call" class="flex items-center gap-2"><span
-                                        class="iconify i-ri:phone-line icon" aria-hidden="true"></span>
-                                    <div bis_skin_checked="1">
-                                        Перезвонить мне?
-                                    </div>
-                                </label><button type="button" aria-pressed="false" data-state="off"
-                                    class="group inline-flex h-8 w-16 items-center rounded-full bg-gray-200 p-0.5 transition data-[state=on]:bg-primary dark:bg-gray-950"
-                                    id="call">
-                                    <span
-                                        class="h-7 w-7 translate-x-0 rounded-full bg-white transition group-data-[state=on]:translate-x-8"></span><!----></button><!---->
-                            </div>
-                        </div>
-                    </section>
-                </div>
-                <div class="space-y-6 rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-900 sticky top-[calc(var(--sticky-top-offset)+1.5rem)]"
-                    bis_skin_checked="1">
-                    <section class="space-y-2" style="position: relative">
-                        <h2 class="font-bold !leading-none lg:text-xl">
-                            Способ оплаты
-                        </h2>
-                        <div role="radiogroup" aria-required="true" dir="ltr" tabindex="0" class="flex flex-col gap-2"
-                            style="outline: none; position: relative" bis_skin_checked="1">
-                            <button class="group flex items-center gap-3 py-1" tabindex="-1" data-active="true"
-                                data-reka-collection-item="" role="radio" type="button" aria-checked="true"
-                                data-state="checked" required="true" value="yandex_kassa">
-                                <div class="grid h-6 w-6 shrink-0 place-items-center rounded-full border-2 bg-white transition group-data-[state=checked]:border-primary dark:border-gray-800 dark:bg-gray-900"
-                                    bis_skin_checked="1">
-                                    <span data-state="checked"
-                                        class="h-3 w-3 rounded-full bg-primary data-[state=checked]:animate-fadeIn"></span>
-                                </div>
-                                <div class="text-left leading-none" bis_skin_checked="1">
-                                    Банковской картой
-                                </div>
-                                <div class="ml-auto grid shrink-0 place-items-center" bis_skin_checked="1">
-                                    <img src="./Мамин хлеб_files/payment-cards.svg" alt="" />
-                                </div>
-                                <!---->
-                            </button><!----><!---->
-                        </div>
-                    </section>
-                    <section class="space-y-2 rounded-lg bg-gray-100 px-4 py-1 dark:bg-gray-800">
-                        <!---->
-                        <div class="divide-y divide-gray-300 dark:divide-gray-700" bis_skin_checked="1">
-                            <div class="relative flex items-center gap-2.5 py-2.5 leading-none" type="button"
-                                aria-haspopup="dialog" aria-expanded="false" data-state="closed" bis_skin_checked="1">
-                                <span class="iconify i-ri:percent-line icon" aria-hidden="true"></span>
-                                <div class="flex w-full flex-wrap items-center gap-x-1" bis_skin_checked="1">
-                                    <span>Промокод</span><button type="button"
-                                        class="inline-flex border-transparent bg-primary text-white focus-visible:ring-primary/30 disabled:cursor-not-allowed items-center justify-center rounded-md border px-4 py-3 text-center leading-none transition focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 ml-auto h-7"
-                                        data-v-wave-boundary="true">
-                                        <div class="w-full" bis_skin_checked="1">
-                                            Ввести
-                                        </div>
-                                        <span class="iconify i-ri:loader-4-line icon absolute animate-spin"
-                                            aria-hidden="true" style="display: none"></span>
-                                    </button>
-                                </div>
-                                <!---->
-                            </div>
-                            <!---->
-                        </div>
-                    </section>
-                    <section class="space-y-2">
-                        <!---->
-                        <h2 class="font-bold !leading-none lg:text-xl">
-                            Детали заказа
-                        </h2>
-                        <div class="space-y-1.5" bis_skin_checked="1">
-                            <div class="flex justify-between gap-2" bis_skin_checked="1">
-                                <div bis_skin_checked="1">Товаров на сумму</div>
-                                <div class="whitespace-nowrap" bis_skin_checked="1">
-                                    3&nbsp;450 ₽
-                                </div>
-                            </div>
-                            <div class="flex justify-between gap-2" bis_skin_checked="1">
-                                <div bis_skin_checked="1">Доставка</div>
-                                <div class="whitespace-nowrap" bis_skin_checked="1">
-                                    0 ₽
-                                </div>
-                            </div>
-                            <div class="flex justify-between gap-2" bis_skin_checked="1">
-                                <div bis_skin_checked="1">Скидка</div>
-                                <div class="whitespace-nowrap" bis_skin_checked="1">
-                                    0 ₽
-                                </div>
-                            </div>
-                            <!---->
-                            <div class="flex justify-between gap-2 font-bold" bis_skin_checked="1">
-                                <div class="!leading-none lg:text-lg" bis_skin_checked="1">
-                                    Итого
-                                </div>
-                                <div class="whitespace-nowrap" bis_skin_checked="1">
-                                    3&nbsp;450 ₽
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <!---->
-                    <div class="sticky bottom-4" bis_skin_checked="1">
-                        <button type="submit"
-                            class="flex w-full border-transparent bg-primary text-white focus-visible:ring-primary/30 disabled:cursor-not-allowed items-center justify-center rounded-md border px-4 py-3 text-center leading-none transition focus-visible:outline-none focus-visible:ring-4 disabled:opacity-50 !h-14 shadow-md"
-                            data-v-wave-boundary="true">
-                            <div class="w-full" bis_skin_checked="1">
-                                <div class="flex w-full items-center justify-between gap-1.5 px-1 text-lg leading-none"
-                                    bis_skin_checked="1">
-                                    <span>Заказать</span><span class="whitespace-nowrap">3&nbsp;450 ₽</span>
-                                </div>
-                            </div>
-                            <span class="iconify i-ri:loader-4-line icon absolute animate-spin" aria-hidden="true"
-                                style="display: none"></span>
-                        </button>
-                    </div>
-                    <div class="flex gap-3 text-xs leading-none" bis_skin_checked="1">
-                        <input type="checkbox"
-                            class="h-5 w-5 rounded border-gray-300 text-primary transition focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/30 focus:ring-offset-0 dark:border-gray-800 dark:bg-gray-950 scroll-m-20"
-                            id="agreement-v-4-0-4" required="" /><label for="agreement-v-4-0-4"
-                            class="block text-left text-gray-600 dark:text-gray-400">
-                            Я даю
-                            <a href="https://dostavka.maminhleb.ru/agreement" rel="noopener noreferrer" target="_blank"
-                                class="font-semibold text-primary hover:underline">согласие</a>
-                            на обработку моих персональных данных, в соответствии с
-                            Федеральным законом от 27.07.2006 г. №152-ФЗ "О
-                            персональных данных", на условиях, определенных
-                            <a href="https://dostavka.maminhleb.ru/privacy" rel="noopener noreferrer" target="_blank"
-                                class="font-semibold text-primary hover:underline">политикой</a>
-                            в области обработки и обеспечения безопасности
-                            персональных данных
-                        </label>
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</main>
+<?
+echo '<pre>';
+print_r($_POST);
+echo '</pre>';
+?>
 
+<?
+$APPLICATION->IncludeFile(
+    SITE_TEMPLATE_PATH . '/include/comment-model.php',
+    array(),
+    array()
+);
+?>
+
+<?
+$APPLICATION->IncludeFile(
+    SITE_TEMPLATE_PATH . '/include/date-time-model.php',
+    array('DATES' => $arResult['DATES']),
+    array()
+);
+?>
+
+<input type="hidden" name="order-comment" id="orderCommentHidden" value="">
+<input type="hidden" name="order-date" id="orderDateHidden" value="">
+
+<input type="hidden" name="delivery_option" id="thirdDeliveryOption"
+    value="<?= isset($_POST['delivery_option']) ? htmlspecialchars($_POST['delivery_option']) : '' ?>">
+<input type="hidden" name="address" id="thirdAddress"
+    value="<?= isset($_POST['address']) ? htmlspecialchars($_POST['address']) : '' ?>">
+
+<input type="hidden" name="entrance" id="thirdEntrance"
+    value="<?= isset($_POST['entrance']) ? htmlspecialchars($_POST['entrance']) : '' ?>">
+
+<input type="hidden" name="intercom" id="thirdIntercom"
+    value="<?= isset($_POST['intercom']) ? htmlspecialchars($_POST['intercom']) : '' ?>">
+<input type="hidden" name="floor" id="thirdFloor"
+    value="<?= isset($_POST['floor']) ? htmlspecialchars($_POST['floor']) : '' ?>">
+<input type="hidden" name="apartment" id="thirdApartment"
+    value="<?= isset($_POST['apartment']) ? htmlspecialchars($_POST['apartment']) : '' ?>">
+<input type="hidden" name="address-comment" id="thirdAddressComment"
+    value="<?= isset($_POST['address-comment']) ? htmlspecialchars($_POST['address-comment']) : '' ?>">
+<input type="hidden" id="thirdSelectedAddress" name="selected_address"
+    value="<?= isset($_POST['selected_address']) ? htmlspecialchars($_POST['selected_address']) : '' ?>">
+
+<div class="min-w-0 max-w-[425px] grow space-y-6 lg:shrink-0">
+    <div class="space-y-6 rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+        <section class="space-y-3">
+            <h2 class="font-bold !leading-none lg:text-xl">Контактные данные</h2>
+            <div class="flex flex-col gap-3">
+                <div class="relative w-full">
+                    <input id="name" name="name"
+                        class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
+                        placeholder=" " autocomplete="off" type="text" required />
+                    <span
+                        class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">
+                        Имя
+                    </span>
+                </div>
+
+                <div class="relative w-full">
+                    <input id="phone" name="phone"
+                        class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
+                        placeholder=" " autocomplete="off" type="text" inputmode="numeric" required />
+                    <span
+                        class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">
+                        Номер телефона
+                    </span>
+                </div>
+
+                <div class="relative w-full hidden" id="email-wrapper">
+                    <input id="email" name="email"
+                        class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:ring-4 focus:ring-primary/30 disabled:cursor-not-allowed dark:border-gray-800 dark:bg-gray-950 dark:placeholder:text-gray-500"
+                        placeholder=" " autocomplete="off" type="email" />
+                    <span
+                        class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:bg-transparent peer-placeholder-shown:px-0 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-500 peer-focus:peer-placeholder-shown:ml-1 dark:bg-gray-950 dark:text-gray-400 dark:peer-placeholder-shown:text-gray-500">
+                        Email
+                    </span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="space-y-6 rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
+        <section class="space-y-2 rounded-lg bg-gray-100 px-4 py-1 dark:bg-gray-800 !bg-transparent !p-0">
+            <h2 id="orderType" class="font-bold !leading-none lg:text-xl pt-3">
+                Тип заказа: Доставка
+            </h2>
+            <div class="divide-y divide-gray-300 dark:divide-gray-700">
+
+                <div id="orderButton" href="#address"
+                    class="order-address-button relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8">
+                    <span class="iconify i-ri:map-pin-line icon" aria-hidden="true"></span>
+                    <div class="space-y-1">
+                        <div id="deliveryAddress"></div>
+                        <div id="deliveryAddressDetail" class="text-sm leading-none text-gray-500"></div>
+                    </div>
+                    <span class="iconify i-ri:arrow-right-s-line icon absolute right-0" aria-hidden="true"></span>
+                </div>
+
+                <div class="popup-datetime relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
+                    type="button" aria-haspopup="dialog" aria-expanded="false" href="#dateTimeModal">
+                    <span class="iconify i-ri:chat-history-line icon" aria-hidden="true"></span>
+                    <div>Укажите дату</div>
+                    <span class="iconify i-ri:arrow-right-s-line icon absolute right-0" aria-hidden="true"></span>
+                </div>
+
+                <div class="popup-comment relative flex items-center gap-2.5 py-2.5 leading-none cursor-pointer pr-8"
+                    type="button" aria-haspopup="dialog" aria-expanded="false" href="#commentModal">
+                    <span class="iconify i-ri:message-3-line icon" aria-hidden="true"></span>
+                    <div class="truncate">Комментарий к заказу</div>
+                    <span class="iconify i-ri:arrow-right-s-line icon absolute right-0" aria-hidden="true"></span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div
+        class="space-y-6 rounded-lg border bg-white p-6 dark:border-gray-800 dark:bg-gray-900 sticky top-[calc(var(--sticky-top-offset)+1.5rem)]">
+        <section class="space-y-2" style="position: relative;">
+            <h2 class="leading-none! font-bold lg:text-xl">Способ оплаты</h2>
+            <input type="hidden" name="payment_type" id="payment_type" value="cod">
+
+            <div class="payment-options">
+                <button type="button" id="payment_cod" class="payment-option flex items-center gap-3 py-1" value="2">
+                    <div
+                        class="indicator-wrapper border-2 grid h-6 w-6 place-items-center rounded-full bg-white transition">
+                        <span class="indicator h-3 w-3 rounded-full bg-primary"></span>
+                    </div>
+                    <div>Наличными курьеру</div>
+                </button>
+
+                <!-- Блок для ввода суммы сдачи -->
+                <div id="change_block" class="flex flex-col gap-x-4 gap-y-2 change-amount"
+                    style="display: flex; margin-top: 5px;">
+                    <div class="flex w-full max-w-xs items-center gap-4">
+                        <div class="relative w-full">
+                            <input type="text" name="change_amount" id="change_amount"
+                                class="peer w-full rounded-md border border-gray-200 bg-white px-5 py-2 transition placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/30"
+                                placeholder=" " autocomplete="off" inputmode="numeric" required>
+                            <span
+                                class="pointer-events-none absolute -top-2 left-6 transform rounded bg-white px-1 text-xs text-gray-500 transition-all">
+                                С какой суммы нужна сдача?
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Кнопка "Банковской картой" -->
+                <button type="button" id="payment_card" class="payment-option flex items-center gap-3 py-1" value="3">
+                    <div
+                        class="indicator-wrapper border-2 grid h-6 w-6 place-items-center rounded-full bg-white transition">
+                        <!-- Изначально без красного кружка -->
+                        <span class="indicator h-3 w-3 rounded-full"></span>
+                    </div>
+                    <div>Банковской картой</div>
+                </button>
+            </div>
+
+            <section class="space-y-2">
+                <h2 class="leading-none! font-bold lg:text-xl">Детали заказа</h2>
+                <div class="space-y-1.5">
+                    <div class="flex justify-between gap-2">
+                        <div>Товаров на сумму</div>
+                        <div class="whitespace-nowrap" id="totalSum"></div>
+                    </div>
+                    <div class="flex justify-between gap-2">
+                        <div>Скидка</div>
+                        <div class="whitespace-nowrap">0 BYN</div>
+                    </div>
+                    <div class="flex justify-between gap-2 font-bold">
+                        <div class="leading-none! lg:text-lg">Итого</div>
+                        <div class="whitespace-nowrap" id="totalSum"></div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="sticky bottom-4">
+                <button type="submit" id="orderLogic"
+                    class="flex w-full bg-primary focus-visible:ring-primary/30 border-transparent text-white disabled:cursor-not-allowed cursor-pointer items-center justify-center rounded-md border px-4 py-3 text-center leading-none transition focus-visible:ring-4 focus-visible:outline-hidden disabled:opacity-50 h-14! shadow-md"
+                    data-v-wave-boundary="true">
+                    <div class="w-full">
+                        <div class="flex w-full items-center justify-between gap-1.5 px-1 text-lg leading-none">
+                            <span>Заказать</span><span class="whitespace-nowrap" id="totalSum"></span>
+                        </div>
+                    </div>
+                    <span class="iconify i-ri:loader-4-line icon absolute animate-spin" aria-hidden="true"
+                        style="display: none;"></span>
+                </button>
+            </div>
+
+            <div class="flex gap-3 text-xs leading-none">
+                <input type="checkbox"
+                    class="text-primary focus:border-primary focus:ring-primary/30 h-5 w-5 rounded border-gray-300 transition focus:ring-4 focus:ring-offset-0 focus:outline-hidden dark:border-gray-800 dark:bg-gray-950 scroll-m-20"
+                    id="agreement-v-6-0-4" required="">
+                <label for="agreement-v-6-0-4" class="block text-left text-gray-600 dark:text-gray-400">
+                    Я даю
+                    <a href="/agreement" rel="noopener noreferrer" target="_blank"
+                        class="text-primary font-semibold hover:underline">
+                        согласие
+                    </a>
+                    на обработку моих персональных данных, в соответствии с Федеральным законом
+                    от 27.07.2006 г. №152-ФЗ "О персональных данных", на условиях, определенных
+                    <a href="/privacy" rel="noopener noreferrer" target="_blank"
+                        class="text-primary font-semibold hover:underline">
+                        политикой
+                    </a> в области обработки и обеспечения безопасности персональных данных
+                </label>
+            </div>
+        </section>
+    </div>
+</div>
+
+<style>
+    .white-popup {
+        position: relative;
+        background: #fff;
+        padding: 30px;
+        width: 100%;
+        max-width: 400px;
+        margin: 40px auto;
+        text-align: center;
+        border-radius: 10px;
+    }
+
+    .white-popup h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+
+    .white-popup ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    .white-popup ul li {
+        padding: 4px 0;
+        color: #d60000;
+    }
+
+    .white-popup .close-popup {
+        background: #333;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .white-popup .close-popup:hover {
+        background: #000;
+    }
+</style>
+
+<div id="validation-error-popup" class="mfp-hide white-popup">
+    <h2>Не заполнены поля</h2>
+    <ul id="validation-error-list"></ul>
+    <button class="close-popup">Закрыть</button>
+</div>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        BX.ajax.runComponentAction('shelton:order', 'checkBasketAndAddressSession', {
-            mode: 'class',
-            data: {}
-        }).then(function (response) {
-            if (response.data.status === 'error') {
-                window.location.href = response.data.redirect;
+    $(function () {
+        var $buttons = $(".payment-option");
+        var $changeBlock = $("#change_block");
+        var $changeInput = $("#change_amount");
+        var $paymentType = $("#payment_type");
+
+        function updatePayment($button) {
+            $buttons.removeClass("active");
+            $buttons.find(".indicator").removeClass("bg-primary");
+            $button.addClass("active");
+            $button.find(".indicator").addClass("bg-primary");
+            $paymentType.val($button.val());
+            if ($button.val() === "2") {
+                $changeBlock.show();
+                $changeInput.prop("disabled", false).attr("required", true);
+            } else {
+                $changeBlock.hide();
+                $changeInput.prop("disabled", true).removeAttr("required");
             }
-        }).catch(function (error) {
-            console.log(error);
+        }
+
+        $buttons.on("click", function () {
+            updatePayment($(this));
         });
 
-        BX.ajax.runComponentAction('shelton:order', 'getBasket', {
-            mode: 'class',
-            data: {}
-        }).then(function (response) {
-            console.log(response);
-        }).catch(function (error) {
-            console.log(error);
-        })
+        var initialPayment = $paymentType.val();
+        if (initialPayment === "2") {
+            updatePayment($("#payment_cod"));
+        } else {
+            updatePayment($("#payment_card"));
+        }
     });
 </script>
+
+<script>
+    $(function () {
+        // Логика для комментариев
+        $('#saveCommentBtn').on('click', function () {
+            var commentValue = $('#commentTextArea').val().trim();
+            $('#orderCommentHidden').val(commentValue);
+            $.magnificPopup.close();
+        });
+
+        // Инициализация Magnific Popup для комментариев
+        $('.popup-comment').magnificPopup({
+            type: 'inline',
+            removalDelay: 300,
+            mainClass: 'mfp-fade',
+            closeBtnInside: true
+        });
+        $('#closeCommentModal').on('click', function () {
+            $.magnificPopup.close();
+        });
+    });
+
+    $(function () {
+        // Логика для выбора даты/времени
+        $('#closeDateTimeModal').on('click', function () {
+            $.magnificPopup.close();
+        });
+
+        let selectedDate = null;
+        const saveBtn = $('#saveDateTimeBtn');
+        const container = $('#dateSwiper');
+        const dateHiddenInput = $('#orderDateHidden');
+
+        container.on('click', 'swiper-slide', function () {
+            container.find('swiper-slide').removeClass('active');
+            $(this).addClass('active');
+            selectedDate = $(this).text().trim();
+            saveBtn.prop('disabled', false);
+        });
+
+        let asapActive = false;
+        $('#asapBtn').on('click', function () {
+            asapActive = !asapActive;
+            if (asapActive) {
+                $(this).attr('data-state', 'on').attr('aria-pressed', 'true');
+                selectedDate = 'Как можно скорее';
+                container.find('swiper-slide').removeClass('active');
+                saveBtn.prop('disabled', false);
+            } else {
+                $(this).attr('data-state', 'off').attr('aria-pressed', 'false');
+                selectedDate = null;
+                saveBtn.prop('disabled', true);
+            }
+        });
+
+        saveBtn.on('click', function () {
+            console.log('Выбрана дата:', selectedDate);
+            dateHiddenInput.val(selectedDate);
+            $.magnificPopup.close();
+        });
+
+        // Инициализация Magnific Popup для выбора даты/времени
+        $('.popup-datetime').magnificPopup({
+            type: 'inline',
+            removalDelay: 300,
+            mainClass: 'mfp-fade',
+            closeBtnInside: true
+        });
+    });
+
+</script>
+
+<script>
+    $(function () {
+        $('.order-address-button').magnificPopup({
+            type: 'inline',
+            preloader: false,
+            focus: '#username',
+            modal: true
+        });
+        $(document).on('click', '#closedOrderContainer', function (e) {
+            e.preventDefault();
+            $.magnificPopup.close();
+        });
+    });
+</script>
+
+<?php
+$this->addExternalJS(SITE_TEMPLATE_PATH . "/js/order/index.js");
+?>

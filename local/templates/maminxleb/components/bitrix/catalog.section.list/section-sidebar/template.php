@@ -63,7 +63,7 @@ if ('Y' == $arParams['SHOW_PARENT_NAME'] && 0 < $arResult['SECTION']['ID']) {
 					$this->AddEditAction($arSection['ID'], $arSection['EDIT_LINK'], $strSectionEdit);
 					$this->AddDeleteAction($arSection['ID'], $arSection['DELETE_LINK'], $strSectionDelete, $arSectionDeleteParams);
 					?>
-					<div class="flex flex-col gap-1.5" bis_skin_checked="1">
+					<div class="flex flex-col gap-1.5" >
 						<a class="section_catalog_from_scroll" href="#<?= $arSection['CODE'] ?>"
 							class="flex items-center gap-2 rounded border px-2.5 py-2 text-base leading-none transition hover:bg-white hover:dark:bg-gray-900 border-transparent"
 							data-v-wave-boundary="true">
