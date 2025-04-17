@@ -153,8 +153,6 @@ class OrderComponent extends CBitrixComponent implements Controllerable
                     ],
                 ]);
 
-                AddMessage2Log($result);
-                die();
                 $USER->Authorize($newUserId);
             }
         }
@@ -171,78 +169,56 @@ class OrderComponent extends CBitrixComponent implements Controllerable
         $res = $userUpdate->Update($userId, $fields);
     }
 
-    protected function createOrderFromContext($postData)
+    protected function addShipment(Order $order, array $postData): void
     {
-
-
-        global $USER;
-        $userId = $USER->GetID();
-        $fuser = \Bitrix\Sale\Fuser::getIdByUserId($userId);
-        $siteId = Context::getCurrent()->getSite();
-
-        $currencyCode = CurrencyManager::getBaseCurrency();
-
-        // Создаём новый заказ
-        $order = Order::create($siteId, $userId, $currencyCode);
-        $order->setPersonTypeId(1);
-
-        $order->setField('CURRENCY', $currencyCode);
-        // Если есть комментарий к заказу, его можно сохранить
-        if (!empty($postData['order-comment'])) {
-            $order->setField('USER_DESCRIPTION', trim($postData['order-comment']));
-        }
-
-        // Получаем текущую корзину покупателя
-        $basket = Basket::loadItemsForFUser($fuser, $siteId);
-        $order->setBasket($basket);
-
-
-
         $shipmentCollection = $order->getShipmentCollection();
         $shipment = $shipmentCollection->createItem();
-        $deliveryId = ($postData['delivery_option'] == 'delivery') ? 2 : 3;
 
+        $deliveryId = ($postData['delivery_option'] === 'delivery') ? 2 : 3;
         $service = Delivery\Services\Manager::getById($deliveryId);
 
-        $shipment->setFields(array(
+        $shipment->setFields([
             'DELIVERY_ID' => $service['ID'],
             'DELIVERY_NAME' => $service['NAME'],
-        ));
+        ]);
 
         $shipmentItemCollection = $shipment->getShipmentItemCollection();
         foreach ($order->getBasket() as $item) {
             $shipmentItem = $shipmentItemCollection->createItem($item);
             $shipmentItem->setQuantity($item->getQuantity());
         }
-        $shipmentCollection = $order->getShipmentCollection();
-        foreach ($shipmentCollection as $shipment) {
-            if (!$shipment->isSystem()) {
-                $shipment->allowDelivery(); // разрешаем отгрузку
+
+        foreach ($shipmentCollection as $shipmentItem) {
+            if (!$shipmentItem->isSystem()) {
+                $shipmentItem->allowDelivery();
             }
         }
+    }
 
+    protected function addPayment(Order $order, array $postData): void
+    {
         $paymentCollection = $order->getPaymentCollection();
         $payment = $paymentCollection->createItem();
+
         $paySystemId = ($postData['payment_type'] == "2") ? 2 : 3;
-        $payment->setFields(array(
+
+        $payment->setFields([
             'PAY_SYSTEM_ID' => $paySystemId,
             'SUM' => $order->getPrice()
-        ));
+        ]);
+    }
 
+    protected function fillOrderProperties(Order $order, array $postData): void
+    {
+        global $USER;
 
         $propertyCollection = $order->getPropertyCollection();
+
         $propertyCollection->getItemByOrderPropertyCode('FIO')?->setValue($postData['name']);
         $propertyCollection->getItemByOrderPropertyCode('PHONE')?->setValue($postData['phone']);
-        $propertyCollection->getItemByOrderPropertyCode('ENTRANCE')?->setValue($postData['entrance']);
-        $propertyCollection->getItemByOrderPropertyCode('INTERCOM')?->setValue($postData['intercom']);
-        $propertyCollection->getItemByOrderPropertyCode('FLOOR')?->setValue($postData['floor']);
-        $propertyCollection->getItemByOrderPropertyCode('FLAT')?->setValue($postData['apartment']);
-        $propertyCollection->getItemByOrderPropertyCode('ADDRESS_NOTE')?->setValue($postData['address-comment']);
-        $propertyCollection->getItemByOrderPropertyCode('CHANGE_FROM_PURCHASE')?->setValue($postData['change_amount']);
-        $propertyCollection->getItemByOrderPropertyCode('DELIVERY_DATE')?->setValue($postData['order-date']);
 
         if ($USER->IsAuthorized()) {
-            $userData = CUser::GetByID($USER->GetID())->Fetch();
+            $userData = \CUser::GetByID($USER->GetID())->Fetch();
             $email = $userData['EMAIL'];
         } elseif (!empty($postData['email'])) {
             $email = $postData['email'];
@@ -252,26 +228,71 @@ class OrderComponent extends CBitrixComponent implements Controllerable
             $propertyCollection->getItemByOrderPropertyCode('EMAIL')?->setValue($email);
         }
 
-        $saveResult = $order->save();
-        if (!$saveResult->isSuccess()) {
-            $errors = $saveResult->getErrors();
-            $errorMessages = [];
+        $propertyCollection->getItemByOrderPropertyCode('ADDRESS')?->setValue($postData['address']);
+        $propertyCollection->getItemByOrderPropertyCode('ENTRANCE')?->setValue($postData['entrance']);
+        $propertyCollection->getItemByOrderPropertyCode('INTERCOM')?->setValue($postData['intercom']);
+        $propertyCollection->getItemByOrderPropertyCode('FLOOR')?->setValue($postData['floor']);
+        $propertyCollection->getItemByOrderPropertyCode('FLAT')?->setValue($postData['apartment']);
+        $propertyCollection->getItemByOrderPropertyCode('ADDRESS_NOTE')?->setValue($postData['address-comment']);
+        $propertyCollection->getItemByOrderPropertyCode('CHANGE_FROM_PURCHASE')?->setValue($postData['change_amount']);
+        $propertyCollection->getItemByOrderPropertyCode('DELIVERY_DATE')?->setValue($postData['order-date']);
 
-            foreach ($errors as $error) {
-                $errorMessages[] = $error->getMessage();
-            }
-
-            return [
-                'status' => 'error',
-                'errors' => $errorMessages
-            ];
-        } else {
-            // Если доставку выбрали и пользователь авторизован – обновляем адресные данные в профиле
-            if ($postData['delivery_option'] === 'delivery' && $USER->IsAuthorized()) {
-                $this->updateUserDeliveryAddress($postData['address']);
+        if ($postData['delivery_option'] === 'pickup') {
+            $pickupAddress = trim($postData['selected_address']);
+            if (!empty($pickupAddress)) {
+                $propertyCollection->getItemByOrderPropertyCode('PICKUP_ADDRESS')?->setValue($pickupAddress);
             }
         }
+    }
 
+    protected function handleOrderSaveErrors(\Bitrix\Main\Result $saveResult): array
+    {
+        $errors = $saveResult->getErrors();
+        $errorMessages = [];
+
+        foreach ($errors as $error) {
+            $errorMessages[] = $error->getMessage();
+        }
+
+        return [
+            'status' => 'error',
+            'errors' => $errorMessages
+        ];
+    }
+
+    protected function createOrderFromContext($postData)
+    {
+        global $USER;
+
+        $userId = $USER->GetID();
+        $fuser = \Bitrix\Sale\Fuser::getIdByUserId($userId);
+        $siteId = Context::getCurrent()->getSite();
+        $currencyCode = CurrencyManager::getBaseCurrency();
+
+        $order = Order::create($siteId, $userId, $currencyCode);
+        $order->setPersonTypeId(1);
+        $order->setField('CURRENCY', $currencyCode);
+
+        if (!empty($postData['order-comment'])) {
+            $order->setField('USER_DESCRIPTION', trim($postData['order-comment']));
+        }
+
+        $basket = Basket::loadItemsForFUser($fuser, $siteId);
+        $order->setBasket($basket);
+
+        $this->addShipment($order, $postData);
+        $this->addPayment($order, $postData);
+        $this->fillOrderProperties($order, $postData);
+
+        $saveResult = $order->save();
+
+        if (!$saveResult->isSuccess()) {
+            return $this->handleOrderSaveErrors($saveResult);
+        }
+
+        if ($postData['delivery_option'] === 'delivery' && $USER->IsAuthorized()) {
+            $this->updateUserDeliveryAddress($postData['address']);
+        }
     }
 
     public function processOrderAction($orderData = [])
