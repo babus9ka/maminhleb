@@ -64,7 +64,14 @@ document.addEventListener("DOMContentLoaded", function () {
     handleAjaxRequest("shelton:order", "processOrder", { orderData })
       .then(function (response) {
         console.log("Ответ от сервера:", response);
-        // здесь можно сделать redirect, popup или сообщение об успехе
+        if (response.status === "success") {
+          $.magnificPopup.open({
+            items: {
+              src: '#order-success-popup',
+              type: 'inline',
+            },
+          });
+        }
       })
       .catch(function (error) {
         console.error("Ошибка сети или сервера:", error);
@@ -112,4 +119,12 @@ document.addEventListener("DOMContentLoaded", function () {
   $(document).on("click", ".close-popup", function () {
     $.magnificPopup.close();
   });
+  // Закрытие popup и редирект при успешном заказе
+  const closeSuccessPopupBtn = document.getElementById("closeSuccessPopup");
+  if (closeSuccessPopupBtn) {
+    closeSuccessPopupBtn.addEventListener("click", function () {
+      $.magnificPopup.close();
+      window.location.href = "/";
+    });
+  }
 });

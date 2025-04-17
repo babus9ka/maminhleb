@@ -223,6 +223,14 @@ $APPLICATION->IncludeFile(
     <button class="close-popup">Закрыть</button>
 </div>
 
+<div id="order-success-popup" class="mfp-hide white-popup">
+    <div class="popup-content">
+        <h2>Спасибо за заказ!</h2>
+        <p>Ваш заказ успешно оформлен.</p>
+        <button id="closeSuccessPopup" class="closeSuccessPopup btn btn-primary">Закрыть</button>
+    </div>
+</div>
+
 <?php
 $this->addExternalJS(SITE_TEMPLATE_PATH . "/js/order/payment-selection.js");
 $this->addExternalJS(SITE_TEMPLATE_PATH . "/js/order/comment-datetime-popup.js");
